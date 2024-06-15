@@ -29,7 +29,7 @@ const initialState = {
   updatedDetails: {},
   boudingBoxDetails: {},
   currentBoundingBox: false,
-  imageSelectorState : false,
+  imageSelectorState: false,
   currentState: {
     currentImage: false,
     currentIndex: 0,
@@ -77,8 +77,8 @@ const reducer = (state, action) => {
     case "TOGGLE_IMAGE_SELECTOR":
       return {
         ...state,
-        imageSelectorState : !state.imageSelectorState
-      }
+        imageSelectorState: !state.imageSelectorState,
+      };
     default:
       return state;
   }
@@ -95,21 +95,33 @@ const Index = () => {
       .get(
         "https://api.unsplash.com/photos/?client_id=II6O1aOT1ZDr-NdwTvjbszNH1ayv7gC8NXDGiWoYHlI&per_page=100"
       )
-      .then(
-        (res) =>
-          dispatch({
-            type: "STORE_IMAGES_DATA",
-            payload: res.data.map((image) => ({
-              id: image.id,
-              url: image.urls.thumb,
-              fullURL : image.urls.full
-            })),
-          })
+      .then((res) =>
+        dispatch({
+          type: "STORE_IMAGES_DATA",
+          payload: res.data.map((image) => ({
+            id: image.id,
+            url: image.urls.thumb,
+            fullURL: image.urls.full,
+          })),
+        })
       );
   }, []);
-
+  const handleKeyPress = (e) => {
+    console.log("Asdhgsafdagsdas", e);
+    if (e.key === "ArrowLeft") {
+      dispatch({
+        type: "PREVIOUS_IMAGE",
+        payload: state.currentState.currentIndex - 1,
+      });
+    } else if (e.key === "ArrowRight") {
+      dispatch({
+        type: "NEXT_IMAGE",
+        payload: state.currentState.currentIndex + 1,
+      });
+    }
+  };
   return (
-    <StyledLayout>
+    <StyledLayout onKeyDownCapture={handleKeyPress} tabIndex="1">
       <MainContext.Provider value={{ state, dispatch }}>
         <ContentWrapper>
           <LeftBar />

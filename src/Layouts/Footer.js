@@ -43,6 +43,7 @@ const FooterBar = () => {
         break;
     }
   };
+ 
   return (
     <StyledFooterBar className="padding-m">
       <FooterButtons
