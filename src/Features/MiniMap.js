@@ -19,7 +19,6 @@ const MiniMap = () => {
   const { state, dispatch } = useContext(MainContext)
   const { imagesData } = state
 
-  console.log("asjdgsakdhgasgdajshgdas", imagesData)
 
 
   return (
@@ -31,8 +30,8 @@ const MiniMap = () => {
             url={url}
             id={id}
             key={id}
+            index={index}
             visited={index === 0}
-            active={index == 1}
           />
         ))
         : null}

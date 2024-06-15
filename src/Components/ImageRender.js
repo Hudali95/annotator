@@ -13,13 +13,21 @@ const StyledImageRenderer = styled.div`
   cusror: ${(props) => (props.mini ? "pointer" : "pointer")};
 `;
 
-const ImageRenderer = ({ id, url, mini, active, visited }) => {
-  const { state, dispatch } = useContext(MainContext)
+const ImageRenderer = ({ id, url, mini, active, visited, index }) => {
+  const { state, dispatch } = useContext(MainContext);
   return (
     <StyledImageRenderer
+      onClick={() =>
+        mini
+          ? dispatch({ type: "UPDATE_CURRENT_IMAGE", payload: index })
+          : undefined
+      }
       style={{
         cursor: mini ? "pointer" : "crosshair",
-        border: state.currentImage === id ? "3px solid green" : "none",
+        border:
+          state.currentState.currentImage.id === id
+            ? "3px solid green"
+            : "none",
       }}
     >
       <img

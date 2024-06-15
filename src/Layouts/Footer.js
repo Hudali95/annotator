@@ -1,6 +1,8 @@
 import { styled } from "styled-components";
 import FooterButtons from "../Components/FooterButtons";
 import MiniMap from "../Features/MiniMap";
+import { useContext } from "react";
+import { MainContext } from "./Index";
 
 const StyledFooterBar = styled.div`
   display: flex;
@@ -10,23 +12,42 @@ const StyledFooterBar = styled.div`
   height: 120px;
 `;
 
-const FooterBar = () => {useContext
-  const {state, dispatch} = useContext(MainContext)
-  const handleButtonsClick =(type)=>{
-    switch(type){
-      case 'left' :
-        break
-        default:
-        break
+const FooterBar = () => {
+  useContext;
+  const { state, dispatch } = useContext(MainContext);
+  const handleButtonsClick = (type) => {
+    switch (type) {
+      case "left":
+        dispatch({
+          type: "NEXT_IMAGE",
+          payload: state.currentState.currentIndex - 1,
+        });
+        break;
+      case "right":
+        dispatch({
+          type: "NEXT_IMAGE",
+          payload: state.currentState.currentIndex + 1,
+        });
+        break;
+      default:
+        break;
     }
-
-  }
+  };
   return (
     <StyledFooterBar className="padding-m">
-      <FooterButtons text={"left"} onClick={()=>handleButtonsClick("left")} />
+      <FooterButtons
+        text={"left"}
+        handleClick={() => handleButtonsClick("left")}
+      />
       <MiniMap />
-      <FooterButtons text={"more"}  onClick={()=>handleButtonsClick("more")}/>
-      <FooterButtons text={"right"}  onClick={()=>handleButtonsClick("right")}/>
+      <FooterButtons
+        text={"more"}
+        handleClick={() => handleButtonsClick("more")}
+      />
+      <FooterButtons
+        text={"right"}
+        handleClick={() => handleButtonsClick("right")}
+      />
     </StyledFooterBar>
   );
 };

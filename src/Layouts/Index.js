@@ -32,14 +32,11 @@ const initialState = {
   currentState: {
     currentImage: false,
     currentIndex: 0,
-    currenyBoudingBox: false
-  }
-}
+    currenyBoudingBox: false,
+  },
+};
 
 const reducer = (state, action) => {
-
-  console.log({ state, action })
-
   switch (action.type) {
     case "STORE_IMAGES_DATA":
       return {
@@ -47,56 +44,61 @@ const reducer = (state, action) => {
         imagesData: action.payload,
         currentImage: action.payload.length ? action.payload[0].id : false,
         currentState: {
-          ...state.currentState,
-          currentImage: action.payload.length ? action.payload[0].id : false,
-        }
-      }
+          currenyBoudingBox: false,
+          currentImage: action.payload.length ? action.payload[0] : false,
+          currentIndex: 0,
+        },
+      };
     case "NEXT_IMAGE":
-      // state.currentImage = state.imagesData[action.payload]
-      // state.currentState.currentImage = state.imagesData.length ? state.imagesData[action.payload].id : false
-      // state.currentState.currentIndex = action.payload
-      return {...state, currentState : {
-        currentImage: state.imagesData.length ? state.imagesData[action.payload].id : false,
-        currentIndex: action.payload,
-        currenyBoudingBox: false
-      }}
+    case "UPDATE_CURRENT_IMAGE":
+      return {
+        ...state,
+        currentState: {
+          currentImage: state.imagesData.length
+            ? state.imagesData[action.payload]
+            : false,
+          currentIndex: action.payload,
+          currenyBoudingBox: false,
+        },
+      };
     case "PREVIOUS_IMAGE":
-      state.currentImage = state.imagesData[action.payload]
-      return {...state}
-    case "CURRENT_IMAGES":
-      currentImage = state.imagesData[action.payload]
-      return state
+      state.currentImage = state.imagesData[action.payload];
+      return { ...state };
+    // case "UPDATE_CURRENT_IMAGE":
+    //   currentImage = state.imagesData[action.payload];
+    //   return state;
     case "UPDATE_BOUDING_BOX":
-      imagesData = action.payload
-      return state
+      imagesData = action.payload;
+      return state;
     case "CURRENT_BOUDING_BOX":
-      imagesData = action.payload
-      return state
+      imagesData = action.payload;
+      return state;
     default:
-      return state
-
+      return state;
   }
+};
 
-}
-
-export const MainContext = createContext()
+export const MainContext = createContext();
 
 const Index = () => {
   let [imagesData, setImagesData] = useState([]);
 
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
     axios
       .get(
         "https://api.unsplash.com/photos/?client_id=II6O1aOT1ZDr-NdwTvjbszNH1ayv7gC8NXDGiWoYHlI&per_page=10"
       )
-      .then((res) =>
-        dispatch({
-          type: "STORE_IMAGES_DATA", payload: res.data.map((image) => ({
-            id: image.id,
-            url: image.urls.thumb,
-          }))
-        })
+      .then(
+        (res) =>
+          dispatch({
+            type: "STORE_IMAGES_DATA",
+            payload: res.data.map((image) => ({
+              id: image.id,
+              url: image.urls.thumb,
+              fullURL : image.urls.full
+            })),
+          })
         // setImagesData(
         //   res.data.map((image) => ({
         //     id: image.id,
@@ -106,7 +108,6 @@ const Index = () => {
       );
   }, []);
 
-  console.log("askjdgasd", state)
   return (
     <StyledLayout>
       <MainContext.Provider value={{ state, dispatch }}>
