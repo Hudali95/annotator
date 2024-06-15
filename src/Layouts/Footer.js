@@ -21,7 +21,7 @@ const FooterBar = () => {
     switch (type) {
       case "left":
         dispatch({
-          type: "NEXT_IMAGE",
+          type: "PREVIOUS_IMAGE",
           payload: state.currentState.currentIndex - 1,
         });
         break;

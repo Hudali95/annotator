@@ -16,7 +16,7 @@ const ContentWrapper = styled.div`
   height: calc(100% - 120px);
   width: 100%;
   display: flex;
-  padding: 0.5rem 1rem;
+  padding-top: 0.5rem;
 `;
 const StyledLayout = styled.div`
   height: 100vh;

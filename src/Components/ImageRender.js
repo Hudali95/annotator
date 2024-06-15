@@ -32,6 +32,7 @@ const ImageRenderer = ({ id, url, mini, active, visited, index }) => {
     >
       <img
         src={url}
+        draggable={false}
         style={{
           ...{
             objectCover: "fill",
