@@ -29,6 +29,7 @@ const initialState = {
   updatedDetails: {},
   boudingBoxDetails: {},
   currentBoundingBox: false,
+  imageSelectorState : false,
   currentState: {
     currentImage: false,
     currentIndex: 0,
@@ -73,6 +74,11 @@ const reducer = (state, action) => {
     case "CURRENT_BOUDING_BOX":
       imagesData = action.payload;
       return state;
+    case "TOGGLE_IMAGE_SELECTOR":
+      return {
+        ...state,
+        imageSelectorState : !state.imageSelectorState
+      }
     default:
       return state;
   }
@@ -87,7 +93,7 @@ const Index = () => {
   useEffect(() => {
     axios
       .get(
-        "https://api.unsplash.com/photos/?client_id=II6O1aOT1ZDr-NdwTvjbszNH1ayv7gC8NXDGiWoYHlI&per_page=10"
+        "https://api.unsplash.com/photos/?client_id=II6O1aOT1ZDr-NdwTvjbszNH1ayv7gC8NXDGiWoYHlI&per_page=100"
       )
       .then(
         (res) =>
@@ -99,12 +105,6 @@ const Index = () => {
               fullURL : image.urls.full
             })),
           })
-        // setImagesData(
-        //   res.data.map((image) => ({
-        //     id: image.id,
-        //     url: image.urls.thumb,
-        //   }))
-        // )
       );
   }, []);
 

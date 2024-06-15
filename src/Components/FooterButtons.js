@@ -7,9 +7,10 @@ const StyledFooterButtons = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+   ${(props) => props.customStyles}
 `;
 
-const FooterButtons = ({ text, handleClick }) => {
+const FooterButtons = ({ text, handleClick, children, customStyles }) => {
   const RenderButton = () => {
     switch (text) {
       case "left":
@@ -23,8 +24,8 @@ const FooterButtons = ({ text, handleClick }) => {
     }
   };
   return (
-    <StyledFooterButtons onClick={handleClick}>
-      {RenderButton()}
+    <StyledFooterButtons  onClick={handleClick}  customStyles={customStyles}> 
+      {RenderButton()}{children}
     </StyledFooterButtons>
   );
 };
